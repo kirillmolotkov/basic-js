@@ -15,9 +15,39 @@ const { NotImplementedError } = require('../extensions/index.js');
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
-function repeater(/* str, options */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+ const DEFAULT_VALUE_OPTIONS = {
+  'repeatTimes': 1,
+  'separator': '+',
+  'addition': '',
+  'additionRepeatTimes': 1,
+  'additionSeparator': '|',
+}
+function repeater(str, options = DEFAULT_VALUE_OPTIONS) {
+  let result = '';
+  let additionPhrase= '';
+  let phrase = str + '';
+  let repeatTimes = options['repeatTimes'] || DEFAULT_VALUE_OPTIONS['repeatTimes'];
+  let separator = options['separator'] || DEFAULT_VALUE_OPTIONS['separator'];
+  let addition = String(options['addition']) || DEFAULT_VALUE_OPTIONS['addition'];
+  let additionRepeatTimes = options['additionRepeatTimes'] || DEFAULT_VALUE_OPTIONS['additionRepeatTimes'];
+  let additionSeparator = options['additionSeparator'] || DEFAULT_VALUE_OPTIONS['additionSeparator'];
+  if(options['addition'] === undefined){
+    addition = '';
+  }
+  for(let i = 0; i < additionRepeatTimes; i++){
+          additionPhrase += `${addition}`;
+      if(i < additionRepeatTimes - 1){
+          additionPhrase += `${additionSeparator}`
+      }
+  }
+  for(let i = 0; i < repeatTimes; i++){
+      result += `${phrase}${additionPhrase}`
+      if(i < repeatTimes - 1){
+          result += `${separator}`;
+      }
+  }
+  
+  return result
 }
 
 module.exports = {
